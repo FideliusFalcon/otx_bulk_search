@@ -41,10 +41,11 @@ def main():
     OTX_SERVER = 'https://otx.alienvault.com/'
     otx = OTXv2(API_KEY, server=OTX_SERVER)
 
-    report = {}
+    report = {"overview": {}, "results":{}}
     for ip in ips:
         alerts = otx_search.ip(otx, ip)
-        report[ip] = alerts
+        report["overview"][ip] = {"hits": len(alerts), "url": "https://otx.alienvault.com/indicator/ip/" + ip}
+        report["results"][ip] = alerts
     
     filename = fh.report(report)
 
